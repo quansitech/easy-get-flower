@@ -1,6 +1,6 @@
 # quansitech/easy-get-flower
 ```text
-腾讯公益小红花对接API
+腾讯公益小红花API
 ```
 
 #### 安装

@@ -1,0 +1,21 @@
+{
+  "name": "quansitech/easy-get-flower",
+  "description": "txgy xhh easygetflower",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "xhiny",
+      "email": "axhiny@163.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "guzzlehttp/guzzle": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "EasyGetFlower\\": "src/"
+    }
+  }
+}

@@ -14,7 +14,7 @@ class Application
 
     public function __construct($config)
     {
-        Config::setConfig($config);
+        Config::set($config);
     }
 
     public function getUserXhhNum($openid){

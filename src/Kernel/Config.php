@@ -9,11 +9,11 @@ class Config
 
     public static $config = [];
 
-    public static function setConfig(array $config){
+    public static function set(array $config){
         self::$config = $config;
     }
 
-    public static function getConfig(){
+    public static function get(){
         return self::$config;
     }
 

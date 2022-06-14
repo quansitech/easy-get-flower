@@ -65,15 +65,15 @@ class Link extends BaseClient
 
     protected function buildLink($exchange_id){
         $query = [
-            'appid' => Config::getConfig()['appid'],
+            'appid' => Config::get()['appid'],
             'timestamp' => time(),
             'nonce' => uniqid(),
             'trans_code' => $this->bill->getTransCode(),
             'exchange_id' => $exchange_id,
         ];
 
-        $query['sign'] = Helper::genSign($query, Config::getConfig()['key']);
-        $query['et'] = Config::getConfig()['et'];
+        $query['sign'] = Helper::genSign($query, Config::get()['key']);
+        $query['et'] = Config::get()['et'];
 
         return $this->link_url.'?'.http_build_query($query);
     }

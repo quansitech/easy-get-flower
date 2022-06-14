@@ -36,7 +36,7 @@ trait HttpMethod
         }
 
         $response = $this->client->request('POST', $uri, $this->getOptions($options));
-        return json_decode($response->getBody()->getContents(), true);
+        return new Response(json_decode($response->getBody()->getContents(), true));
     }
 
     abstract public function getBaseUri();

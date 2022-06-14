@@ -6,6 +6,7 @@ namespace EasyGetFlower\Client;
 use EasyGetFlower\Kernel\BaseClient;
 use EasyGetFlower\Kernel\Config;
 use EasyGetFlower\Kernel\Helper;
+use EasyGetFlower\Kernel\Response;
 
 class Link extends BaseClient
 {
@@ -36,24 +37,31 @@ class Link extends BaseClient
     }
 
     public function get(){
-        list($is_bill_valid, $exchange_id) = $this->isBillValid();
+        $bill_res = $this->bill->isExists();
+        if ($bill_res->getFlag() === false){
+            return $bill_res;
+        }
+
+        list($is_bill_valid, $exchange_id) = $this->isBillValid($bill_res);
         if (!$is_bill_valid){
-            return false;
+            return new Response(['code' => 'qs_custom', 'msg' => '无法领取，订单已失效']);
         }
         if (empty($exchange_id)){
             $exchange_id = $this->genExchangeId();
         }
+        if ($exchange_id instanceof Response){
+            return $exchange_id;
+        }
         if ($exchange_id === false){
-            return false;
+            return new Response(['code' => 'qs_custom', 'msg' => '无法领取，用户已达领取上限']);
         }
 
         return $this->buildLink($exchange_id);
     }
 
-    protected function isBillValid(){
-        $res = $this->bill->isExists();
-        $exchange_id = $res['data']['exchange_id'];
-        $xhh_code = $res['data']['xhh_code'];
+    protected function isBillValid($bill_res){
+        $exchange_id = $bill_res->getDataByKey('exchange_id');
+        $xhh_code = $bill_res->getDataByKey('xhh_code');
         if (empty($exchange_id)){
             return [true, ''];
         }else if(empty($xhh_code)){
@@ -80,10 +88,17 @@ class Link extends BaseClient
 
     protected function genExchangeId(){
         $user = $this->user->check();
-        $can_user_get = (string)$user['code'] === '0' && empty($user['data']['attach']);
+        if ($user->getFlag() === false){
+            return $user;
+        }
+        $can_user_get = (string)$user->getRes()['code'] === '0' && empty($user->getDataByKey('attach'));
         if ($can_user_get){
-            $res = $this->bill->preTry($this->xhh_num, $this->time_expire);
-            return $res['data']['exchange_id'];
+            $bill_res = $this->bill->preTry($this->xhh_num, $this->time_expire);
+            if ($bill_res->getFlag() === false){
+                return $bill_res;
+            }else{
+                return $bill_res->getDataByKey('exchange_id');
+            }
         }
 
         return false;

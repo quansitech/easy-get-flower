@@ -31,9 +31,12 @@ $get_flower = new \EasyGetFlower\Application($config);
 // $openid 用户微信openid
 $openid = 'xxx';
 $get_flower->getUserXhhNum($openid);
+
+// 返回值说明
+// 返回用户累计小红花数量
 ```
   
-#### checkBill
+#### hasBillUsed
 ```text
 判断业务订单是否已使用
 ```
@@ -43,7 +46,11 @@ $get_flower->getUserXhhNum($openid);
 // $trans_code 业务订单号，需要以YYYYMMDD开头，不能超过32位
 $openid = 'xxx';
 $trans_code = date('Ymd').'1';
-$get_flower->checkBill($openid,$trans_code);
+$get_flower->hasBillUsed($openid,$trans_code);
+
+// 返回值说明
+// 0 未使用
+// 1 已使用
 ```
   
 #### buildLink
@@ -61,4 +68,16 @@ $trans_code = date('Ymd').'1';
 $xhh_num = '1';
 $time_expire = '';
 $get_flower->buildLink($openid,$trans_code,$xhh_num,$time_expire);
+
+// 返回值说明
+// 返回领花页链接
+```
+
+#### 返回错误统一说明
+```php
+// 若接口返回false，说明是正常的业务错误
+// 获取具体错误
+$get_flower->getError();
+
+// 其它非业务错误直接抛出异常
 ```

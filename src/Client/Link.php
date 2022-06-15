@@ -90,7 +90,7 @@ class Link extends BaseClient
     }
 
     protected function genExchangeId(){
-        $user = $this->user->check();
+        $user = $this->user->check(null,null);
         if ($user->getFlag() === false){
             return $user;
         }

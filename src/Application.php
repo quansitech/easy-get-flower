@@ -13,21 +13,21 @@ class Application
 
     protected $res;
 
-    public function __construct($config)
+    public function __construct(array $config)
     {
         Config::set($config);
     }
 
-    protected function setRes($res){
+    protected function setRes(Response $res):self{
         $this->res = $res;
         return $this;
     }
 
-    public function getError(){
-        return $this->res->getRes();
+    public function getError():array{
+        return $this->res instanceof Response ? $this->res->getRes() : [];
     }
 
-    public function getUserXhhNum($openid){
+    public function getUserXhhNum(string $openid){
         $res = (new User($openid))->totalNum();
         if ($res->getFlag() === true){
             return $res->getDataByKey('history_xhh');
@@ -37,7 +37,7 @@ class Application
         }
     }
 
-    public function hasBillUsed($openid, $trans_code)
+    public function hasBillUsed(string $openid, string $trans_code)
     {
         $bill = new Bill($openid, $trans_code);
         $res = $bill->isExists();
@@ -50,7 +50,7 @@ class Application
         }
     }
 
-    public function buildLink($openid, $trans_code, $xhh_num, $time_expire){
+    public function buildLink(string $openid, string $trans_code, ?string $xhh_num, ?string $time_expire){
         $user = new User($openid);
         $bill = new Bill($openid, $trans_code);
 
@@ -65,7 +65,7 @@ class Application
         return $res;
     }
 
-    protected function handleRes($res){
+    protected function handleRes(Response $res){
         if ($res->getFlag() === true){
             return $res->getRes();
         }else{

@@ -7,7 +7,7 @@ namespace EasyGetFlower\Kernel;
 class Helper
 {
 
-    public static function genSign($params, $key){
+    public static function genSign(array $params, string $key):string{
         ksort($params);
 
         $params['key'] = $key;

@@ -62,7 +62,7 @@ $get_flower->hasBillUsed($openid,$trans_code);
 // $openid 用户微信openid
 // $trans_code 业务订单号，需要以YYYYMMDD开头，不能超过32位
 // $xhh_num 期望派发的小红花数量
-// $time_expire 订单重试结束时间，格式为YYYY-MM-DD HH:mm:SS，不能超过10分钟，若为空则当前时间加10分钟
+// $time_expire 订单重试结束时间，格式为YYYY-MM-DD HH:mm:SS，不能超过10分钟，若为空则是当前时间加10分钟
 $openid = 'xxx';
 $trans_code = date('Ymd').'1';
 $xhh_num = '1';
@@ -70,7 +70,8 @@ $time_expire = '';
 $get_flower->buildLink($openid,$trans_code,$xhh_num,$time_expire);
 
 // 返回值说明
-// 返回领花页链接
+// link 领花页链接
+// exchange_id 业务的预发花id
 ```
 
 #### 返回错误统一说明

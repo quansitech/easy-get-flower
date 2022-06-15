@@ -26,12 +26,12 @@ class Link extends BaseClient
         parent::__construct();
     }
 
-    public function setXhhNum($xhh_num){
+    public function setXhhNum(string $xhh_num):self{
         $this->xhh_num = $xhh_num;
         return $this;
     }
 
-    public function setTimeExpire($time_expire){
+    public function setTimeExpire(string $time_expire):self{
         $this->time_expire = $time_expire;
         return $this;
     }
@@ -59,7 +59,7 @@ class Link extends BaseClient
         return $this->buildLink($exchange_id);
     }
 
-    protected function isBillValid($bill_res){
+    protected function isBillValid(Response $bill_res):array{
         $exchange_id = $bill_res->getDataByKey('exchange_id');
         $xhh_code = $bill_res->getDataByKey('xhh_code');
         if (empty($exchange_id)){
@@ -71,7 +71,7 @@ class Link extends BaseClient
         }
     }
 
-    protected function buildLink($exchange_id){
+    protected function buildLink(string $exchange_id):array{
         $query = [
             'appid' => Config::get()['appid'],
             'timestamp' => time(),
@@ -83,7 +83,10 @@ class Link extends BaseClient
         $query['sign'] = Helper::genSign($query, Config::get()['key']);
         $query['et'] = Config::get()['et'];
 
-        return $this->link_url.'?'.http_build_query($query);
+        return [
+            'link' => $this->link_url.'?'.http_build_query($query),
+            'exchange_id' => $exchange_id,
+        ];
     }
 
     protected function genExchangeId(){

@@ -14,7 +14,7 @@ class Config
         self::$config = $config;
     }
 
-    public static function get(){
+    public static function get():array{
         return self::$config;
     }
 

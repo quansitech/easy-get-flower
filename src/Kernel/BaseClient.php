@@ -6,11 +6,11 @@ class BaseClient
 {
     use \EasyGetFlower\Kernel\HttpMethod;
 
-    public function getBaseUri(){
+    public function getBaseUri():string{
         return 'https://oapi.gongyi.qq.com/api/xhh_third_service/';
     }
 
-    public function getHeader(){
+    public function getHeader():array{
         $header = [
             'Gy-H-Api-Appid' => Config::get()['appid'],
             'Gy-H-Api-Timestamp' => time(),

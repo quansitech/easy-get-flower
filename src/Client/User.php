@@ -5,18 +5,19 @@ namespace EasyGetFlower\Client;
 
 
 use EasyGetFlower\Kernel\BaseClient;
+use EasyGetFlower\Kernel\Response;
 
 class User extends BaseClient
 {
     protected $openid;
 
-    public function __construct($openid)
+    public function __construct(string $openid)
     {
         $this->openid = $openid;
         parent::__construct();
     }
 
-    public function check($date = '', $xhh_num = 0){
+    public function check(?string $date, ?string $xhh_num):Response{
         $date =  $date ?: date('Ymd');
         $xhh_num = $xhh_num ?: 1;
         $params = [
@@ -28,7 +29,7 @@ class User extends BaseClient
         return $this->postJson('CheckXhh', $params);
     }
 
-    public function totalNum(){
+    public function totalNum():Response{
         $params = [
             'open_id' => $this->openid,
         ];

@@ -9,23 +9,23 @@ class Response
     protected $flag;
     protected $res;
 
-    public function __construct($res)
+    public function __construct(array $res)
     {
         $this->res = $res;
         $this->handler($res);
     }
 
-    protected function notError($res){
-        $valid_code = ['30110502', '30130028'];
+    protected function notError(array $res){
+        $valid_code = ['qs_custom', '30110502', '30130028'];
 
         return in_array($res['code'], $valid_code);
     }
 
-    protected function isNormal($res){
+    protected function isNormal(array $res){
         return (string)$res['code'] === '0';
     }
 
-    protected function setFlag($flag){
+    protected function setFlag(bool $flag){
         $this->flag = $flag;
         return $this;
     }
@@ -42,7 +42,7 @@ class Response
         return $this->res['data'];
     }
 
-    public function getDataByKey($key){
+    public function getDataByKey(string $key){
         return $this->getData()[$key];
     }
 

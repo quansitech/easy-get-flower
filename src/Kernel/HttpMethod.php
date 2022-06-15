@@ -12,16 +12,16 @@ trait HttpMethod
         $this->client = new Client(['base_uri' => $this->getBaseUri()]);
     }
 
-    public function postJson(string $uri, array $params = []){
+    public function postJson(string $uri, array $params = []):Response{
         return $this->postBase($uri, $this->getHeader(), $params, 'json');
     }
 
-    public function post(string $uri, array $params = [])
+    public function post(string $uri, array $params = []):Response
     {
         return $this->postBase($uri, $this->getHeader(), $params);
     }
 
-    protected function postBase(string $uri, array $headers = [], array $params = [], string $param_type = 'x-www-form-urlencoded')
+    protected function postBase(string $uri, array $headers = [], array $params = [], string $param_type = 'x-www-form-urlencoded'):Response
     {
         $options = [
             'headers' => $headers
@@ -42,9 +42,9 @@ trait HttpMethod
     abstract public function getBaseUri();
     abstract public function getHeader();
 
-    protected function getOptions($options){
+    protected function getOptions($options = []):array{
         $def = ['http_errors' => false];
-        return array_merge($options, $def);
+        return array_merge((array)$options, $def);
     }
 
 }

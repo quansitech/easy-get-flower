@@ -50,13 +50,14 @@ class Application
         }
     }
 
-    public function buildLink(string $openid, string $trans_code, ?string $xhh_num, ?string $time_expire){
+    public function buildLink(string $openid, string $trans_code, ?string $xhh_num, ?string $time_expire, string $jump_type = 'H5'){
         $user = new User($openid);
         $bill = new Bill($openid, $trans_code);
 
         $link = new Link($user, $bill);
         $xhh_num && $link->setXhhNum($xhh_num);
         $time_expire && $link->setTimeExpire($time_expire);
+        $link->setJumpType($jump_type);
 
         $res = $link->get();
         if ($res instanceof Response){

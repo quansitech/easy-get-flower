@@ -16,8 +16,15 @@ class Link extends BaseClient
 
     protected $xhh_num;
     protected $time_expire;
+    protected $jump_type = 'H5';
 
-    protected $link_url = 'https://ssl.gongyi.qq.com/flower-integral/getFlowers.html';
+    const JUMP_TYPE_H5 = 'H5';
+    const JUMP_TYPE_MP = 'MP';
+
+    protected $link_url = [
+        self::JUMP_TYPE_H5 => 'https://ssl.gongyi.qq.com/flower-integral/getFlowers.html',
+        self::JUMP_TYPE_MP => 'pages/flower-integral/get-flowers/main'
+    ];
 
     public function __construct(User $user, Bill $bill)
     {
@@ -33,6 +40,11 @@ class Link extends BaseClient
 
     public function setTimeExpire(string $time_expire):self{
         $this->time_expire = $time_expire;
+        return $this;
+    }
+
+    public function setJumpType(string $jump_type):self{
+        $this->jump_type = $jump_type;
         return $this;
     }
 
@@ -84,7 +96,7 @@ class Link extends BaseClient
         $query['et'] = Config::get()['et'];
 
         return [
-            'link' => $this->link_url.'?'.http_build_query($query),
+            'link' => $this->link_url[$this->jump_type].'?'.http_build_query($query),
             'exchange_id' => $exchange_id,
         ];
     }

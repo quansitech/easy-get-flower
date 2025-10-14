@@ -18,6 +18,8 @@ class Link extends BaseClient
     protected $time_expire;
     protected $jump_type = 'H5';
 
+    protected int $wechat_status = 0;
+
     const JUMP_TYPE_H5 = 'H5';
     const JUMP_TYPE_MP = 'MP';
 
@@ -45,6 +47,11 @@ class Link extends BaseClient
 
     public function setJumpType(string $jump_type):self{
         $this->jump_type = $jump_type;
+        return $this;
+    }
+
+    public function setWechatStatus(int $wechat_status):self{
+        $this->wechat_status = $wechat_status;
         return $this;
     }
 
@@ -93,7 +100,13 @@ class Link extends BaseClient
         ];
 
         $query['sign'] = Helper::genSign($query, Config::get()['key']);
-        $query['et'] = Config::get()['et'];
+        if($this->wechat_status === 1){
+            $query['business_id'] = Config::get()['et'];
+            $query['cooperate_type'] = 1;
+            $query['spmet'] = Config::get()['et'];
+        }else{
+            $query['et'] = Config::get()['et'];
+        }
 
         return [
             'link' => $this->link_url[$this->jump_type].'?'.http_build_query($query),

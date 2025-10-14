@@ -64,12 +64,15 @@ $get_flower->hasBillUsed($openid,$trans_code);
 // $xhh_num 期望派发的小红花数量
 // $time_expire 订单重试结束时间，格式为YYYY-MM-DD HH:mm:SS，不能超过10分钟，若为空则是当前时间加10分钟
 // jump_type 跳转类型，目前支持H5和MP小程序，默认为H5
+// wechat_status 设置微信状态，0 否 1 是，默认为 0
+
 $openid = 'xxx';
 $trans_code = date('Ymd').'1';
 $xhh_num = '1';
 $time_expire = '';
 $jump_type = 'H5';
-$get_flower->buildLink($openid,$trans_code,$xhh_num,$time_expire,$jump_type);
+$wechat_status = 0;
+$get_flower->buildLink($openid,$trans_code,$xhh_num,$time_expire,$jump_type,$wechat_status);
 
 // 返回值说明
 // link 领花页链接

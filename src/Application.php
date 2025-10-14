@@ -50,7 +50,7 @@ class Application
         }
     }
 
-    public function buildLink(string $openid, string $trans_code, ?string $xhh_num, ?string $time_expire, string $jump_type = 'H5'){
+    public function buildLink(string $openid, string $trans_code, ?string $xhh_num, ?string $time_expire, string $jump_type = 'H5', int $wechat_status = 0){
         $user = new User($openid);
         $bill = new Bill($openid, $trans_code);
 
@@ -58,6 +58,7 @@ class Application
         $xhh_num && $link->setXhhNum($xhh_num);
         $time_expire && $link->setTimeExpire($time_expire);
         $link->setJumpType($jump_type);
+        $link->setWechatStatus($wechat_status);
 
         $res = $link->get();
         if ($res instanceof Response){

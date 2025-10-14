@@ -79,6 +79,18 @@ $get_flower->buildLink($openid,$trans_code,$xhh_num,$time_expire,$jump_type,$wec
 // exchange_id 业务的预发花id
 ```
 
+#### buildSilenceWechatStatusLink
+```text
+生成无感发花设置微信状态路径
+```
+```php
+$get_flower->buildSilenceWechatStatusLink();
+
+// 返回值说明
+// link 无感发花设置微信状态路径
+```
+
+
 #### 返回错误统一说明
 ```php
 // 若接口返回false，说明是正常的业务错误

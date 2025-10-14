@@ -4,6 +4,7 @@ namespace EasyGetFlower;
 
 use EasyGetFlower\Client\Bill;
 use EasyGetFlower\Client\Link;
+use EasyGetFlower\Client\Silence;
 use EasyGetFlower\Client\User;
 use EasyGetFlower\Kernel\Config;
 use EasyGetFlower\Kernel\Response;
@@ -74,6 +75,12 @@ class Application
             $this->setRes($res);
             return false;
         }
+    }
+
+    public function buildSilenceWechatStatusLink():array{
+        $silence = new Silence();
+
+        return $silence->buildSilenceWechatStatusLink();
     }
 
 }

@@ -11,11 +11,14 @@ class Bill extends BaseClient
 {
     protected $openid;
     protected $trans_code;
+    protected $pre_try_param = [];
 
-    public function __construct(string $openid, string $trans_code)
+    public function __construct(string $openid, string $trans_code, array $pre_try_param = [])
     {
         $this->openid = $openid;
         $this->trans_code = $trans_code;
+        $this->pre_try_param = $pre_try_param;
+
         parent::__construct();
     }
 
@@ -28,6 +31,10 @@ class Bill extends BaseClient
             'time_expire' => $time_expire,
             'xhh_num' => $xhh_num
         ];
+
+        if(!empty($this->pre_try_param)){
+            $params += $this->pre_try_param;
+        }
 
         return $this->postJson('PreTry', $params);
     }
